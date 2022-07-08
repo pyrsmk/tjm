@@ -1,0 +1,32 @@
+{
+  "name": "tjm",
+  "version": "0.0.0",
+  "dependencies": {
+    "pinia": "^2.0.14",
+    "sass": "^1.52.2",
+    "uuid": "^8.3.2",
+    "vue": "^3.2.36",
+    "vue-router": "^4.0.15"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@types/jsdom": "^16.2.14",
+    "@types/node": "^16.11.36",
+    "@types/uuid": "^8.3.4",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/eslint-config-typescript": "^10.0.0",
+    "@vue/test-utils": "^2.0.0",
+    "@vue/tsconfig": "^0.1.3",
+    "cypress": "^10.0.2",
+    "eslint": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-vue": "^8.2.0",
+    "jsdom": "^19.0.0",
+    "npm-run-all": "^4.1.5",
+    "start-server-and-test": "^1.14.0",
+    "typescript": "~4.7.2",
+    "vite": "^2.9.9",
+    "vitest": "^0.13.0",
+    "vue-tsc": "^0.35.2"
+  }
+}

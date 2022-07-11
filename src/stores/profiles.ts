@@ -36,12 +36,8 @@ export const baseProfile = {
   days_of_work: 5,
   days_off: 25,
   freelancing_platform_enabled: false,
-  freelancing_platform: null,
   monthly_cash_flow_enabled: true,
-  monthly_cash_flow: null,
-  monthly_costs: new Map(),
-  monthly_salary: null,
-  notes: null,
+  monthly_costs: new Map()
 }
 
 export const useProfileStore = defineStore('profiles', {

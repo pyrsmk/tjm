@@ -6,31 +6,23 @@
   const emit = defineEmits(['change'])
 
   const edit = ref(false)
-  const type = ref<string | null>(null)
-  const textElement = ref(null)
+  const selectElement = ref(null)
 
-  function validate(event : Event) {
-    const value = (event.target as HTMLInputElement).value
-    edit.value = false;
-    const interval = setInterval(() => {
-      if (textElement.value === null) {
-        return
-      }
-      clearInterval(interval);
-      (textElement.value as HTMLInputElement).innerText = value
-      emit('change', value)
-    }, 10)
+  function validate() {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    emit('change', (selectElement.value! as HTMLInputElement).value)
+    edit.value = false
   }
 
-  defineExpose({ textElement })
+  defineExpose({ selectElement })
 </script>
 
 <template>
   <div class="editable">
-    <div ref="textElement" v-if="!edit" @click="edit=true">
+    <div v-if="!edit" @click="edit=true">
       <slot></slot>
     </div>
-    <select v-if="edit" id="type" v-model="type" @input="validate" @blur="validate">
+    <select ref="selectElement" v-if="edit" id="type" @input="validate" @blur="validate">
       <option v-for="key in Object.keys(CompanyType)" v-bind:key="key" :value="key">
         {{ CompanyType[key as keyof typeof CompanyType] }}
       </option>

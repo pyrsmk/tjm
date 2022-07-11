@@ -43,7 +43,9 @@
         <label for="type">Type de votre structure</label>
         <select id="type" v-model="type">
           <option disabled :value="null">Sélectionner un type</option>
-          <option value="eurl">EURL</option>
+          <option v-for="key in Object.keys(CompanyType)" v-bind:key="key" :value="key">
+            {{ CompanyType[key as keyof typeof CompanyType] }}
+          </option>
         </select>
       </div>
       <div class="button">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { busy } from '@/helpers'
   import { RouterLink } from 'vue-router'
-  import { useProfileStore } from '@/stores/profiles'
+  import { useProfileStore, CompanyType } from '@/stores/profiles'
   import { v4 as uuidv4 } from 'uuid'
   import BorderRevealButton from '@/components/BorderRevealButton.vue'
   import CopyButton from '@/components/CopyButton.vue'
@@ -40,7 +40,7 @@
             custom
           >
             <a :href="href" @click="navigate">
-              {{ profile.name }} ({{ profile.type.toUpperCase() }})
+              {{ profile.name }} ({{ CompanyType[profile.type] }})
             </a>
             <CopyButton @click="busy(() => duplicateProfile(profile.id))">
               Dupliquer

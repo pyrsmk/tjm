@@ -1,13 +1,14 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue'
   import { toEuros } from '@/helpers'
-  import { useProfileStore } from '@/stores/profiles'
+  import { useProfileStore, CompanyType } from '@/stores/profiles'
   import { useRoute } from 'vue-router'
   import { v4 as uuidv4 } from 'uuid'
   import ActivationCheckbox from '@/components/ActivationCheckbox.vue'
   import BlockTitle from '@/components/BlockTitle.vue'
   import DeleteButton from '@/components/DeleteButton.vue'
   import EditableText from '@/components/EditableText.vue'
+  import EditableSelect from '@/components/EditableSelect.vue'
   import PageLayout from '@/layouts/PageLayout.vue'
   import PageTitle from '@/components/PageTitle.vue'
   import ProfileCalculations from '@/classes/ProfileCalculations'
@@ -17,9 +18,13 @@
   const profile = await profileStore.fetch(route.params.id as string)
   const calculations = new ProfileCalculations(profile)
 
-  const monthlyCostAmount = ref<string>('')
-  const monthlyCostName = ref<string>('')
-  const monthlyCostNameInput = ref<HTMLElement | null>(null)
+  const monthlyCostAmount = ref('')
+  const monthlyCostName = ref('')
+  const monthlyCostNameElement = ref<HTMLElement | null>(null)
+
+  function updateCompanyType(value : string) : void {
+    profile.type = CompanyType[value as keyof typeof CompanyType]
+  }
 
   function addCurrentMonthlyCost() : void {
     const n = monthlyCostName.value.trim()
@@ -30,7 +35,7 @@
     profile.monthly_costs.set(uuidv4(), { enabled: true, name: n, amount: a })
     monthlyCostName.value = ''
     monthlyCostAmount.value = '';
-    (monthlyCostNameInput.value as HTMLElement).focus()
+    (monthlyCostNameElement.value as HTMLElement).focus()
   }
 
   function removeMonthlyCost(id : string) : void {
@@ -50,28 +55,12 @@
 
 <template>
   <PageLayout>
-    <EditableText>
-      <template v-slot:text>
-        <PageTitle>
-          {{ profile.name }} ({{ profile.type.toLocaleUpperCase() }})
-        </PageTitle>
-      </template>
-      <template v-slot:edit>
-        <div class="company_form">
-          <div class="block">
-            <label for="name">Nom du profil</label>
-            <input type="text" id="name" v-model.lazy="profile.name" />
-          </div>
-          <div class="block">
-            <label for="type">Type de votre structure</label>
-            <select id="type" v-model="profile.type">
-              <option disabled :value="null">Sélectionner un type</option>
-              <option value="eurl">EURL</option>
-            </select>
-          </div>
-        </div>
-      </template>
-    </EditableText>
+    <PageTitle>
+      <EditableText>{{ profile.name }}</EditableText>&nbsp;&middot;&nbsp;
+      <EditableSelect :items="CompanyType" @change="updateCompanyType">
+        {{ CompanyType[profile.type] }}
+      </EditableSelect>
+    </PageTitle>
     <div class="layout">
       <div>
         <div class="work_details">
@@ -136,7 +125,7 @@
           </ul>
           <div class="inputs">
             <input
-              ref="monthlyCostNameInput"
+              ref="monthlyCostNameElement"
               type="text"
               v-model="monthlyCostName"
               @keyup.enter="addCurrentMonthlyCost()"

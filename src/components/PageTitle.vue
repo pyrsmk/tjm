@@ -7,8 +7,9 @@
 
 <style lang="sass" scoped>
   h2
+    align-items: center
     color: var(--shocking-pink)
-    display: inline
+    display: flex
     font-family: 'Comfortaa', cursive
     font-size: 1.8em
     font-weight: bold

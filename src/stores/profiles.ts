@@ -4,7 +4,7 @@ import Storage from '@/classes/Storage'
 const storage = new Storage()
 
 export enum CompanyType {
-  eurl = 'eurl',
+  EURL = 'EURL',
 }
 
 export type MonthlyCost = {

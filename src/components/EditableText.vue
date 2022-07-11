@@ -1,12 +1,22 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
+
+  const emit = defineEmits(['change'])
+
+  const textElement = ref(null)
+
   function validate(event : Event) {
     (event.target as HTMLInputElement).blur()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    emit('change', (textElement.value! as HTMLElement).innerText.trim())
   }
+
+  defineExpose({ textElement })
 </script>
 
 <template>
   <div class="editable">
-    <div contenteditable spellcheck="false" @keydown.enter="validate">
+    <div ref="textElement" contenteditable spellcheck="false" @keydown.enter="validate">
       <slot></slot>
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">

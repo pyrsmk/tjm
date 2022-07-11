@@ -22,6 +22,10 @@
   const monthlyCostName = ref('')
   const monthlyCostNameElement = ref<HTMLElement | null>(null)
 
+  function updateProfileName(value : string) : void {
+    profile.name = value
+  }
+
   function updateCompanyType(value : string) : void {
     profile.type = CompanyType[value as keyof typeof CompanyType]
   }
@@ -56,7 +60,10 @@
 <template>
   <PageLayout>
     <PageTitle>
-      <EditableText>{{ profile.name }}</EditableText>&nbsp;&middot;&nbsp;
+      <EditableText @change="updateProfileName">
+        {{ profile.name }}
+      </EditableText>
+      &nbsp;&middot;&nbsp;
       <EditableSelect :items="CompanyType" @change="updateCompanyType">
         {{ CompanyType[profile.type] }}
       </EditableSelect>
